@@ -11,11 +11,11 @@ export async function help(message: Discord.Message, args: Array<String>) {
 
   embed.addField(
     "Commands",
-    "help - help panel\naddcode - Adds a code\ngetcode - Get a code to help\nrecovered - Marks the current code as rescued (will be verified)\ngiveup - Skips the current code (also used if failed attemp)\ncodes - Lists your active codes"
+    "help - help panel\naddcode <code> - Adds a code\ngetcode - Get a code to help\nrecovered - Marks the current code as rescued (will be verified)\ngiveup - Skips the current code (also used if failed attemp)\ncodes - Lists your active codes"
   );
 
   //TODO Add Infos
-  embed.addField("Infos", "Nothing here yet.");
+  embed.addField("Infos", "< > - means required argument\n[ ] - means optional argument");
 
   embed.addField(
     "Disclaimer and Dataprivacy Notice",
