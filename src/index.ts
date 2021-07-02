@@ -23,10 +23,27 @@ const app = express();
 
 app.use("/", expressMain);
 
+bot.on("ready", () => {
+  console.log("Discord Bot Ready!", "Connected to", bot.guilds.cache.array().length, "guild.");
+
+  setInterval(() => {
+    bot.user?.setPresence({
+      status: "online",
+      activity: {
+        name: `${process.env.PREFIX || "#"}help | ${bot.guilds.cache.array().length} Guilds`,
+        url: "https://discord.com/oauth2/authorize?client_id=860281562972291082&scope=bot&permissions=330752",
+        type: "WATCHING",
+      },
+    });
+  }, 60000);
+});
+
 bot.on("message", onMessage);
 
 bot.login(process.env.DISCORD_TOKEN || process.exit(10));
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Express Ready!");
+});
 
 process.on("beforeExit", () => {
   db.close();
