@@ -1,10 +1,12 @@
-require("dotenv").config();
+import * as Discord from "discord.js";
+import * as dotenv from "dotenv";
 
-const Discord = require("discord.js");
-const express = require("express");
+import { default as express } from "express";
+
+dotenv.config();
 
 const bot = new Discord.Client();
-const app = new express();
+const app = express();
 
 app.get("/", (req, res) => {});
 
