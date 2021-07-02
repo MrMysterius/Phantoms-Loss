@@ -49,7 +49,7 @@ export interface userData {
   xp: number;
 }
 
-export function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamConnections: Array<connectionsData>) {
+export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamConnections: Array<connectionsData>) {
   let sql = `INSERT INTO users (user_id, username, steam_username, access_token, refresh_token, scope, token_type, level, xp) VALUES ('${userData.id}', '${
     userData.username
   }', '${steamConnections.reduce((p, c) => (p += c.name + " "), "")}', '${oAuth2Data.access_token}', '${oAuth2Data.refresh_token}', '${oAuth2Data.scope}', '${
@@ -57,6 +57,24 @@ export function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamC
   }', 1, 0)`;
   try {
     db.prepare(sql).run();
+    return;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+  }
+  const user = await dbGetUser(userData.id);
+  if (!user) return;
+
+  sql = `UPDATE users SET username = '${userData.username}', steam_username = '${steamConnections.reduce(
+    (p, c) => (p += c.name + " "),
+    ""
+  )}', access_token = '${oAuth2Data.access_token}', refresh_token = '${oAuth2Data.refresh_token}', scope = '${oAuth2Data.scope}', token_type = '${
+    oAuth2Data.token_type
+  }' WHERE user_id = '${user.user_id}'`;
+
+  try {
+    db.prepare(sql).run();
+    return;
   } catch (err) {
     console.log(sql);
     console.log(err);
