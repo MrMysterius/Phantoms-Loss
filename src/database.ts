@@ -38,13 +38,15 @@ export interface connectionsData {
 }
 
 export function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamConnections: Array<connectionsData>) {
+  let sql = `INSERT INTO users (user_id, username, steam_username, access_token, refresh_token, scope, token_type, level, xp) VALUES ('${userData.id}', '${
+    userData.username
+  }', '${steamConnections.reduce((p, c) => (p += c.name + " "), "")}', '${oAuth2Data.access_token}', '${oAuth2Data.refresh_token}', '${oAuth2Data.scope}', '${
+    oAuth2Data.token_type
+  }', 1, 0)`;
   try {
-    db.prepare(
-      `INSERT INTO users (user_id, username, steam_username, access_token, refresh_token, scope, token_type, level, xp) VALUES ("${userData.id}", "${
-        userData.username
-      }", "${steamConnections.reduce((p, c) => (p += c + ";"), "")}", "${oAuth2Data.access_token}", "${oAuth2Data.refresh_token}", "${oAuth2Data.scope}", "${
-        oAuth2Data.token_type
-      }", 1, 0)`
-    ).run();
-  } catch (err) {}
+    db.prepare(sql).run();
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+  }
 }
