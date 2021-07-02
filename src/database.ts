@@ -107,3 +107,27 @@ export async function dbUpdateTokens(user_id: string, access_token: string, refr
   }
   return false;
 }
+
+export async function dbAddCode(user_id: string, code: string) {
+  let sql = `INSERT INTO codes (code, requester, added_at, status, uncommon, rare, epic, legendary, attempts, strikes) VALUES ('${code}', '${user_id}', '${new Date()}', 'OPEN', 0, 0, 0, 0, 0, 0)`;
+
+  try {
+    return await db.prepare(sql).run().lastInsertRowid;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return undefined;
+  }
+}
+
+export async function dbCodeSetMessageID(code_id: string, message_id: string) {
+  let sql = `UPDATE codes SET message_id = '${message_id} WHERE code_id = '${code_id}'`;
+
+  try {
+    return db.prepare(sql).run();
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return;
+  }
+}
