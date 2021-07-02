@@ -18,6 +18,7 @@
   "homepage": "https://github.com/MrMysterius/Phantoms-Loss#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1"
   }
 }
