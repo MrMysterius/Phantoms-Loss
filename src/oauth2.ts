@@ -1,4 +1,4 @@
-import { OAuth2Data, connectionsData, dbAddOAuth2, userObject } from "./database";
+import { OAuth2Data, connectionsData, dbAddOAuth2, dbGetUser, userObject } from "./database";
 
 import { URLSearchParams } from "url";
 import { default as fetch } from "node-fetch";
@@ -57,4 +57,27 @@ export async function getSteamConnections(token_type: string, access_token: stri
   const filteredConnections = connectionsData.filter((data) => data.type == "steam");
 
   return filteredConnections;
+}
+
+export async function refreshToken(user_id: string) {
+  const user = await dbGetUser(user_id);
+
+  if (!user) return undefined;
+
+  const body = {
+    client_id: process.env.CLIENT_ID || process.exit(11),
+    client_secret: process.env.CLIENT_SECRET || process.exit(11),
+    grant_type: "refresh_token",
+    refresh_token: user.refresh_token,
+  };
+
+  const resRefresh = await fetch("https://discord.com/api/oauth2/token", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams(body),
+  });
+
+  return await resRefresh.json();
 }
