@@ -18,7 +18,7 @@ db.prepare(
   "CREATE TABLE IF NOT EXISTS codes (code_id INTEGER, code TEXT, created_by TEXT, resolved_by TEXT, resolved INTEGER, created_at TEXT, resolved_at TEXT, verified INTEGER, PRIMARY KEY (code_id AUTOINCREMENT), FOREIGN KEY (resolved_by) REFERENCES users(user_id), FOREIGN KEY (created_by) REFERENCES users(user_id))"
 ).run();
 
-const bot = new Discord.Client();
+export const bot = new Discord.Client();
 const app = express();
 
 app.use("/", expressMain);
