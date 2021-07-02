@@ -56,7 +56,16 @@ export async function help(message: Discord.Message, args: Array<String>) {
   );
 
   const dm = await message.author.createDM();
-  dm.send(embed).catch(() => {
-    message.channel.send(embed).catch(() => {});
-  });
+  dm.send(embed)
+    .then((msg) => {
+      if (msg.deletable) msg.delete({ timeout: 120000 });
+    })
+    .catch(() => {
+      message.channel
+        .send(embed)
+        .then((msg) => {
+          if (msg.deletable) msg.delete({ timeout: 120000 });
+        })
+        .catch(() => {});
+    });
 }
