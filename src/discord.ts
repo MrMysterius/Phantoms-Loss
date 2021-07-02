@@ -65,7 +65,7 @@ export async function dmRestricted(message: Discord.Message) {
     const embed = createFailedEmbed(message, "Command restricted to DM's");
     dm.send(embed)
       .then((msg) => {
-        if (msg.deletable) msg.delete({ timeout: 10000 });
+        if (msg.deletable) msg.delete({ timeout: 30000 });
       })
       .catch(() => {
         message.channel
