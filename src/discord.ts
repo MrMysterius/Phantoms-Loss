@@ -18,7 +18,7 @@ export async function onMessage(message: Discord.Message) {
       help(message, args);
       break;
     case "addcode":
-      if (!user) return;
+      if (!user) return notRegistered(message);
       if (!(await dmRestricted(message))) return;
       addCode(message, args, user);
       break;
@@ -88,4 +88,21 @@ export async function dmRestricted(message: Discord.Message) {
     return false;
   }
   return true;
+}
+
+export async function notRegistered(message: Discord.Message) {
+  const dm = await message.author.createDM();
+  const embed = createFailedEmbed(message, "You are not registered. Click Here.").setURL((process.env.OAUTH_LINK as string) || "");
+  dm.send(embed)
+    .then((msg) => {
+      if (msg.deletable) msg.delete({ timeout: 30000 });
+    })
+    .catch(() => {
+      message.channel
+        .send(embed)
+        .then((msg) => {
+          if (msg.deletable) msg.delete({ timeout: 10000 });
+        })
+        .catch(() => {});
+    });
 }
