@@ -1,5 +1,6 @@
 import * as Discord from "discord.js";
 
+import { addCode } from "./commands/addcode";
 import { bot } from ".";
 import { help } from "./commands/help";
 
@@ -11,6 +12,9 @@ export async function onMessage(message: Discord.Message) {
   switch (command) {
     case "help":
       help(message, args);
+      break;
+    case "addcode":
+      addCode(message, args);
       break;
   }
 }
