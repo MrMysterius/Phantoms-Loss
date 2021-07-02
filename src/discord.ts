@@ -2,6 +2,7 @@ import * as Discord from "discord.js";
 
 import { addCode } from "./commands/addcode";
 import { bot } from ".";
+import { dbGetUser } from "./database";
 import { help } from "./commands/help";
 
 export async function onMessage(message: Discord.Message) {
@@ -14,7 +15,9 @@ export async function onMessage(message: Discord.Message) {
       help(message, args);
       break;
     case "addcode":
-      if (await dmRestricted(message)) addCode(message, args);
+      if (!(await isRegistered(message.author.id))) return;
+      if (!(await dmRestricted(message))) return;
+      addCode(message, args);
       break;
   }
 }
@@ -82,4 +85,10 @@ export async function dmRestricted(message: Discord.Message) {
     return false;
   }
   return true;
+}
+
+export async function isRegistered(user_id: string) {
+  const user = await dbGetUser(user_id);
+  if (user) return true;
+  return false;
 }
