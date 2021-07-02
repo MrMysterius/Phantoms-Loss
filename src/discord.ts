@@ -54,7 +54,7 @@ export function createSuccessEmbed(message: Discord.Message, title: string) {
 export function createFailedEmbed(message: Discord.Message, title: string) {
   const embed = createBasicEmbed(message);
 
-  embed.setTitle(`${process.env.E_SUCCESS || "FAILED"} ${title}`);
+  embed.setTitle(`${process.env.E_FAILED || "FAILED"} ${title}`);
 
   return embed;
 }
