@@ -48,6 +48,8 @@ export function createSuccessEmbed(message: Discord.Message, title: string) {
 
   embed.setTitle(`${process.env.E_SUCCESS || "SUCCESS"} ${title}`);
 
+  embed.setColor(0x82ff94);
+
   return embed;
 }
 
@@ -55,6 +57,8 @@ export function createFailedEmbed(message: Discord.Message, title: string) {
   const embed = createBasicEmbed(message);
 
   embed.setTitle(`${process.env.E_FAILED || "FAILED"} ${title}`);
+
+  embed.setColor(0xff4949);
 
   return embed;
 }
