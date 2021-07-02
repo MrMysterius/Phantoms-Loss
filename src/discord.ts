@@ -30,6 +30,30 @@ export function createBasicEmbed(message: Discord.Message) {
   return embed;
 }
 
+export function createLoadingEmbed(message: Discord.Message, title: string) {
+  const embed = createBasicEmbed(message);
+
+  embed.setTitle(`<a:processing:835931849363554345> ${title}`);
+
+  return embed;
+}
+
+export function createSuccessEmbed(message: Discord.Message, title: string) {
+  const embed = createBasicEmbed(message);
+
+  embed.setTitle(`<a:TickGreen:834559457266106388> ${title}`);
+
+  return embed;
+}
+
+export function createFailedEmbed(message: Discord.Message, title: string) {
+  const embed = createBasicEmbed(message);
+
+  embed.setTitle(`<a:TickRed605591595441455109:834559457069498368> ${title}`);
+
+  return embed;
+}
+
 export async function help(message: Discord.Message, args: Array<String>) {
   const embed = createBasicEmbed(message);
 
