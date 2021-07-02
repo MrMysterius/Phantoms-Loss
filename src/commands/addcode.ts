@@ -2,7 +2,9 @@ import * as Discord from "discord.js";
 
 import { createFailedEmbed } from "../discord";
 
-export async function addCode(message: Discord.Message, args: Array<string>) {
+import { userData } from "../database";
+
+export async function addCode(message: Discord.Message, args: Array<string>, user: userData) {
   if (!args[0] || args[0].length != 172) {
     const dm = await message.author.createDM();
     const embed = createFailedEmbed(message, "Code Missing");

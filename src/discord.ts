@@ -1,8 +1,9 @@
 import * as Discord from "discord.js";
 
+import { dbGetUser, userData } from "./database";
+
 import { addCode } from "./commands/addcode";
 import { bot } from ".";
-import { dbGetUser } from "./database";
 import { help } from "./commands/help";
 
 export async function onMessage(message: Discord.Message) {
@@ -10,14 +11,16 @@ export async function onMessage(message: Discord.Message) {
   const args = message.content.slice((process.env.PREFIX || "#").length).split(" ");
   const command = args.shift();
 
+  const user = await dbGetUser(message.author.id);
+
   switch (command) {
     case "help":
       help(message, args);
       break;
     case "addcode":
-      if (!(await isRegistered(message.author.id))) return;
+      if (!user) return;
       if (!(await dmRestricted(message))) return;
-      addCode(message, args);
+      addCode(message, args, user);
       break;
   }
 }
@@ -85,10 +88,4 @@ export async function dmRestricted(message: Discord.Message) {
     return false;
   }
   return true;
-}
-
-export async function isRegistered(user_id: string) {
-  const user = await dbGetUser(user_id);
-  if (user) return true;
-  return false;
 }
