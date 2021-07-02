@@ -9,6 +9,14 @@ import { expressMain } from "./express";
 dotenv.config();
 
 export const db = new bsql(path.join(__dirname, "phantom_loss.db"));
+
+db.prepare(
+  "CREATE TABLE IF NOT EXISTS user (user_id TEXT, username TEXT, steam_username TEXT, access_token TEXT, refresh_token TEXT, scope TEXT, token_type TEXT, level NUMERIC, xp NUMERIC, PRIMARY KEY (user_id))"
+).run();
+db.prepare(
+  "CREATE TABLE IF NOT EXISTS codes (code_id INTEGER, code TEXT, resolved_by TEXT, resolved INTEGER, created_at TEXT, resolved_at TEXT, verified INTEGER, PRIMARY KEY (code_id AUTOINCREMENT), FOREIGN KEY (resolved_by) REFERENCES users(user_id))"
+).run();
+
 const bot = new Discord.Client();
 const app = express();
 
