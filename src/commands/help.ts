@@ -11,7 +11,7 @@ export async function help(message: Discord.Message, args: Array<String>) {
 
   embed.addField(
     "Commands",
-    "help - help panel\naddcode <code> - Adds a code\ngetcode - Get a code to help\nrecovered - Marks the current code as rescued (will be verified)\ngiveup - Skips the current code (also used if failed attemp)\ncodes - Lists your active codes"
+    "`help` - help panel\n`addcode <code>` - Adds a code\n`getcode` - Get a code to help\n`recovered` - Marks the current code as rescued (will be verified)\n`giveup` - Skips the current code (also used if failed attemp)\n`codes` - Lists your active codes\n`userinfo <mention or userid>` - shows infos about a user"
   );
 
   //TODO Add Infos
@@ -19,12 +19,12 @@ export async function help(message: Discord.Message, args: Array<String>) {
 
   embed.addField(
     "Disclaimer and Dataprivacy Notice",
-    "You need to setup an account for almost everything on this bot. This also stores data about your user account (this includes Discord), connections on your Discord account and sharecodes that you give the bot. As well as timestamps of certain actions. I also ban unfair or cheating players. For this premise I use a verification System that display your Steam Username to somebody random.\nIf you don't want to get false detected keep your steam connection on your Discord account up to date.\n\nThe bot also primarly is used in dm's so please keep them open to the Bot."
+    "You **need** to setup an account for almost everything on this bot. This also stores data about your user account (this includes Discord), connections on your Discord account and sharecodes that you give the bot. As well as timestamps of certain actions. I also ban unfair or cheating players. For this premise I use a verification System that display your Steam Username to somebody random.\nIf you **don't want to get false detected** keep your **steam connection** on your Discord account **up to date**.\n\nThe bot also **primarly is used in dm's** so please **keep them open** to the Bot."
   );
 
   embed.addField(
     "Credits",
-    "Thanks for some friends of mine testing stuff and also some people helping me with a bit of game knowledge this includes qwertaii#1184 - <@315879989612511234> and Moulberry#0001 - <@211288288055525376>."
+    "Thanks for some friends of mine testing stuff and also some people helping me with a bit of game knowledge this includes **qwertaii#1184** - <@315879989612511234> and **Moulberry#0001** - <@211288288055525376>."
   );
 
   const dm = await message.author.createDM();
