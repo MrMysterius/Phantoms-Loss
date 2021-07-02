@@ -121,7 +121,7 @@ export async function dbAddCode(user_id: string, code: string) {
 }
 
 export async function dbCodeSetMessageID(code_id: string, message_id: string) {
-  let sql = `UPDATE codes SET message_id = '${message_id} WHERE code_id = '${code_id}'`;
+  let sql = `UPDATE codes SET message_id = '${message_id} WHERE code_id = ${code_id}`;
 
   try {
     return db.prepare(sql).run();
