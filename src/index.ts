@@ -14,7 +14,7 @@ db.prepare(
   "CREATE TABLE IF NOT EXISTS user (user_id TEXT, username TEXT, steam_username TEXT, access_token TEXT, refresh_token TEXT, scope TEXT, token_type TEXT, level NUMERIC, xp NUMERIC, PRIMARY KEY (user_id))"
 ).run();
 db.prepare(
-  "CREATE TABLE IF NOT EXISTS codes (code_id INTEGER, code TEXT, resolved_by TEXT, resolved INTEGER, created_at TEXT, resolved_at TEXT, verified INTEGER, PRIMARY KEY (code_id AUTOINCREMENT), FOREIGN KEY (resolved_by) REFERENCES users(user_id))"
+  "CREATE TABLE IF NOT EXISTS codes (code_id INTEGER, code TEXT, created_by TEXT, resolved_by TEXT, resolved INTEGER, created_at TEXT, resolved_at TEXT, verified INTEGER, PRIMARY KEY (code_id AUTOINCREMENT), FOREIGN KEY (resolved_by) REFERENCES users(user_id), FOREIGN KEY (created_by) REFERENCES users(user_id))"
 ).run();
 
 const bot = new Discord.Client();
