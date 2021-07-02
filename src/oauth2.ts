@@ -1,4 +1,5 @@
-import { OAuth2Data } from "./database";
+import { OAuth2Data, dbAddOAuth2, userObject } from "./database";
+
 import { URLSearchParams } from "url";
 import { default as fetch } from "node-fetch";
 
@@ -11,7 +12,7 @@ export async function newOAuth2(code: string) {
     redirect_uri: process.env.OAUTH_REDIRECT_URI || process.exit(11),
   };
 
-  const res = await fetch("https://discord.com/api/v9/oauth2/token", {
+  const resOAuth2 = await fetch("https://discord.com/api/oauth2/token", {
     method: "POST",
     headers: {
       "Content-type": "application/x-www-form-urlencoded",
@@ -19,5 +20,19 @@ export async function newOAuth2(code: string) {
     body: new URLSearchParams(body),
   });
 
-  console.log(res);
+  const oauth2Data: OAuth2Data = await resOAuth2.json();
+
+  if (!oauth2Data.access_token) return;
+
+  const resMe = await fetch("https://discord.com/api/users/@me", {
+    headers: {
+      authorization: `${oauth2Data.token_type} ${oauth2Data.access_token}`,
+    },
+  });
+
+  const meData: userObject = await resMe.json();
+
+  if (!meData.id) return;
+
+  dbAddOAuth2(oauth2Data, meData);
 }
