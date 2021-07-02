@@ -49,6 +49,24 @@ export interface userData {
   xp: number;
 }
 
+export interface codeData {
+  code_id: string;
+  code: string;
+  message_id: string;
+  requester: string;
+  assignee: string;
+  added_at: string;
+  resolved_at: string;
+  status: string;
+  uncommon: number;
+  rare: number;
+  epic: number;
+  legendary: number;
+  guardian: string;
+  attempts: number;
+  strikes: number;
+}
+
 export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamConnections: Array<connectionsData>) {
   let sql = `INSERT INTO users (user_id, username, steam_username, access_token, refresh_token, scope, token_type, level, xp) VALUES ('${userData.id}', '${
     userData.username
@@ -131,3 +149,17 @@ export async function dbCodeSetMessageID(code_id: string, message_id: string) {
     return;
   }
 }
+
+export async function dbGetUsersCodes(user_id: string): Promise<Array<codeData>> {
+  if (!user_id) return [];
+  let sql = `SELECT * FROM codes WHERE requester = '${user_id}'`;
+
+  try {
+    return db.prepare(sql).all();
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return [];
+  }
+}
+
