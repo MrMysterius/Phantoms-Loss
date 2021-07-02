@@ -34,7 +34,7 @@ export function createBasicEmbed(message: Discord.Message) {
 export function createLoadingEmbed(message: Discord.Message, title: string) {
   const embed = createBasicEmbed(message);
 
-  embed.setTitle(`<a:processing:835931849363554345> ${title}`);
+  embed.setTitle(`${process.env.E_PROCESSING || "PROCESSING"} ${title}`);
 
   return embed;
 }
@@ -42,7 +42,7 @@ export function createLoadingEmbed(message: Discord.Message, title: string) {
 export function createSuccessEmbed(message: Discord.Message, title: string) {
   const embed = createBasicEmbed(message);
 
-  embed.setTitle(`<a:TickGreen:834559457266106388> ${title}`);
+  embed.setTitle(`${process.env.E_SUCCESS || "SUCCESS"} ${title}`);
 
   return embed;
 }
@@ -50,7 +50,7 @@ export function createSuccessEmbed(message: Discord.Message, title: string) {
 export function createFailedEmbed(message: Discord.Message, title: string) {
   const embed = createBasicEmbed(message);
 
-  embed.setTitle(`<a:TickRed605591595441455109:834559457069498368> ${title}`);
+  embed.setTitle(`${process.env.E_SUCCESS || "FAILED"} ${title}`);
 
   return embed;
 }
