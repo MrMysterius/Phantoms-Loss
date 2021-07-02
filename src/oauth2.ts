@@ -1,4 +1,4 @@
-import { OAuth2Data, connectionsData, dbAddOAuth2, dbGetUser, userObject } from "./database";
+import { OAuth2Data, connectionsData, dbAddOAuth2, dbGetUser, dbUpdateTokens, userObject } from "./database";
 
 import { URLSearchParams } from "url";
 import { default as fetch } from "node-fetch";
@@ -79,5 +79,9 @@ export async function refreshToken(user_id: string) {
     body: new URLSearchParams(body),
   });
 
-  return await resRefresh.json();
+  const refreshData: OAuth2Data = await resRefresh.json();
+
+  while (!(await dbUpdateTokens(user_id, refreshData.access_token, refreshData.refresh_token))) {}
+
+  return refreshData;
 }
