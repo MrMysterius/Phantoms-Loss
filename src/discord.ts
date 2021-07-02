@@ -14,7 +14,7 @@ export async function onMessage(message: Discord.Message) {
       help(message, args);
       break;
     case "addcode":
-      addCode(message, args);
+      if (await dmRestricted(message)) addCode(message, args);
       break;
   }
 }
@@ -57,4 +57,25 @@ export function createFailedEmbed(message: Discord.Message, title: string) {
   embed.setTitle(`${process.env.E_SUCCESS || "FAILED"} ${title}`);
 
   return embed;
+}
+
+export async function dmRestricted(message: Discord.Message) {
+  if (message.channel.type != "dm") {
+    const dm = await message.author.createDM();
+    const embed = createFailedEmbed(message, "Command restricted to DM's");
+    dm.send(embed)
+      .then((msg) => {
+        if (msg.deletable) msg.delete({ timeout: 10000 });
+      })
+      .catch(() => {
+        message.channel
+          .send(embed)
+          .then((msg) => {
+            if (msg.deletable) msg.delete({ timeout: 10000 });
+          })
+          .catch(() => {});
+      });
+    return false;
+  }
+  return true;
 }
