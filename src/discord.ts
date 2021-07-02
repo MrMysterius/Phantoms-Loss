@@ -1,5 +1,7 @@
 import * as Discord from "discord.js";
 
+import { bot } from ".";
+
 export async function onMessage(message: Discord.Message) {
   if (!message.content.startsWith(process.env.PREFIX || "#") || message.author.bot) return;
   const args = message.content.slice((process.env.PREFIX || "#").length).split(" ");
