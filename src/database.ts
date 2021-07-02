@@ -37,6 +37,18 @@ export interface connectionsData {
   visibility: number;
 }
 
+export interface userData {
+  user_id: string;
+  username: string;
+  steam_username: string;
+  access_token: string;
+  refresh_token: string;
+  scope: string;
+  token_type: string;
+  level: number;
+  xp: number;
+}
+
 export function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamConnections: Array<connectionsData>) {
   let sql = `INSERT INTO users (user_id, username, steam_username, access_token, refresh_token, scope, token_type, level, xp) VALUES ('${userData.id}', '${
     userData.username
@@ -49,4 +61,16 @@ export function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamC
     console.log(sql);
     console.log(err);
   }
+}
+
+export async function dbGetUser(user_id: string): Promise<userData | undefined> {
+  let sql = `SELECT * FROM users WHERE user_id = '${user_id}'`;
+
+  try {
+    return db.prepare(sql).all()[0];
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+  }
+  return undefined;
 }
