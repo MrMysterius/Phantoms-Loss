@@ -62,6 +62,8 @@ export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, 
     console.log(sql);
     console.log(err);
   }
+
+  console.log("Trying Update...");
   const user = await dbGetUser(userData.id);
   if (!user) return;
 
@@ -70,7 +72,7 @@ export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, 
     ""
   )}', access_token = '${oAuth2Data.access_token}', refresh_token = '${oAuth2Data.refresh_token}', scope = '${oAuth2Data.scope}', token_type = '${
     oAuth2Data.token_type
-  }' WHERE user_id = '${user.user_id}'`;
+  }' WHERE user_id = '${userData.id}'`;
 
   try {
     db.prepare(sql).run();
