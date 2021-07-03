@@ -35,7 +35,7 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
     return;
   }
 
-  const openCodes = await dbCodesGetOpen();
+  const openCodes = await dbCodesGetOpen(user.user_id);
 
   const code = openCodes[Math.floor(Math.random() * openCodes.length)];
 

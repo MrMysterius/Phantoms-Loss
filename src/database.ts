@@ -163,8 +163,8 @@ export async function dbGetUsersCodes(user_id: string): Promise<Array<codeData>>
   }
 }
 
-export async function dbCodesGetOpen(): Promise<Array<codeData>> {
-  let sql = `SELECT * FROM codes WHERE status = 'OPEN'`;
+export async function dbCodesGetOpen(user_id: string): Promise<Array<codeData>> {
+  let sql = `SELECT * FROM codes WHERE status = 'OPEN' and requester != '${user_id}'`;
 
   try {
     return db.prepare(sql).all();
