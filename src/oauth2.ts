@@ -22,7 +22,7 @@ export async function newOAuth2(code: string) {
 
   const oauth2Data: OAuth2Data = await resOAuth2.json();
 
-  if (!oauth2Data.access_token) return;
+  if (!oauth2Data.access_token || !oauth2Data.scope.includes("identify") || !oauth2Data.scope.includes("connections")) return;
 
   const meData = await getUserInfo(oauth2Data.token_type, oauth2Data.access_token);
 
