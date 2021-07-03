@@ -5,6 +5,7 @@ import { dbGetUser, userData } from "./database";
 import { addCode } from "./commands/addcode";
 import { bot } from ".";
 import { getCode } from "./commands/getcode";
+import { giveUp } from "./commands/giveup";
 import { help } from "./commands/help";
 
 export async function onMessage(message: Discord.Message) {
@@ -27,6 +28,11 @@ export async function onMessage(message: Discord.Message) {
       if (!user) return notRegistered(message);
       if (!(await dmRestricted(message))) return;
       getCode(message, args, user);
+      break;
+    case "giveup":
+      if (!user) return notRegistered(message);
+      if (!(await dmRestricted(message))) return;
+      giveUp(message, args, user);
       break;
   }
 }
