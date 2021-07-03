@@ -7,6 +7,7 @@ import { bot } from ".";
 import { getCode } from "./commands/getcode";
 import { giveUp } from "./commands/giveup";
 import { help } from "./commands/help";
+import { register } from "./commands/register";
 
 export async function onMessage(message: Discord.Message) {
   if (!message.content.startsWith(process.env.PREFIX || "#") || message.author.bot) return;
@@ -33,6 +34,10 @@ export async function onMessage(message: Discord.Message) {
       if (!user) return notRegistered(message);
       if (!(await dmRestricted(message))) return;
       giveUp(message, args, user);
+      break;
+    case "register":
+      if (!(await dmRestricted(message))) return;
+      register(message);
       break;
   }
 }
