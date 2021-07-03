@@ -18,6 +18,11 @@ export async function help(message: Discord.Message, args: Array<String>) {
   embed.addField("Infos", "< > - means required argument\n[ ] - means optional argument");
 
   embed.addField(
+    "Leveling",
+    `Everybody starts at Level 1 with 0 XP. You get for a verified recovery ${process.env.LVL_REWARD_XP} XP. You need for a levelup \`${process.env.LVL_BASE_XP} * CURRENT_LEVEL * ${process.env.LVL_XP_SCALE}\`. Every ${process.env.LVL_SLOT_PER} Levels you get an extra slot of concurrent codes you can get help on.`
+  );
+
+  embed.addField(
     "Disclaimer and Dataprivacy Notice",
     "You **need** to setup an account for almost everything on this bot. This also stores data about your user account (this includes Discord), connections on your Discord account and sharecodes that you give the bot. As well as timestamps of certain actions. I also ban unfair or cheating players. For this premise I use a verification System that display your Steam Username to somebody random.\nIf you **don't want to get false detected** keep your **steam connection** on your Discord account **up to date**.\n\nThe bot also **primarly is used in dm's** so please **keep them open** to the Bot."
   );
