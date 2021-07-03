@@ -210,3 +210,15 @@ export async function dbCodeUnassign(code_id: string, newAttempts: number) {
     return;
   }
 }
+
+export async function dbCodesOfRequester(user_id: string): Promise<Array<codeData>> {
+  let sql = `SELECT * FROM codes WHERE requester = '${user_id}'`;
+
+  try {
+    return db.prepare(sql).all();
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return [];
+  }
+}
