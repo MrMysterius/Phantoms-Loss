@@ -267,3 +267,16 @@ export async function dbCodeChangeStatus(code_id: string, status: codeStatus) {
     return;
   }
 }
+
+export async function dbUserUpdateLevelAndXP(user_id: string, level: number, xp: number) {
+  let sql = `UPDATE users SET level = ${level}, xp = ${xp} WHERE user_id = '${user_id}'`;
+
+  try {
+    db.prepare(sql).run();
+    return;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return;
+  }
+}
