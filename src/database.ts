@@ -1,5 +1,4 @@
 import { db } from ".";
-import internal from "stream";
 
 export interface OAuth2Data {
   access_token: string;
