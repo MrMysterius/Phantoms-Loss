@@ -241,3 +241,29 @@ export async function dbCodesOfRequester(user_id: string): Promise<Array<codeDat
     return [];
   }
 }
+
+export async function dbCodeRecovered(code_id: string) {
+  let sql = `UPDATE codes SET status = '${codeStatus.verification_pending}', resolved_at = '${new Date()}' WHERE code_id = '${code_id}'`;
+
+  try {
+    db.prepare(sql).run();
+    return;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return;
+  }
+}
+
+export async function dbCodeChangeStatus(code_id: string, status: codeStatus) {
+  let sql = `UPDATE codes SET status = '${status}' WHERE code_id = '${code_id}'`;
+
+  try {
+    db.prepare(sql).run();
+    return;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return;
+  }
+}
