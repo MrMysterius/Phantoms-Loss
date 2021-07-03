@@ -37,7 +37,16 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
 
   const openCodes = await dbCodesGetOpen(user.user_id);
 
-  const code = openCodes[Math.floor(Math.random() * openCodes.length)];
+  if (openCodes.length == 0) return await createFailedEmbed(message, "No codes available :/");
+
+  const averageAttempts = openCodes.reduce((p, c) => (p += c.attempts), 0) / open.length;
+
+  let code = openCodes[0];
+  code.attempts - 1;
+
+  while (code.attempts < averageAttempts) {
+    code = openCodes[Math.floor(Math.random() * openCodes.length)];
+  }
 
   await dbCodeAssign(user.user_id, code.code_id);
 
