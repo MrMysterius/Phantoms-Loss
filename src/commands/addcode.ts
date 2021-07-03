@@ -1,11 +1,9 @@
 import * as Discord from "discord.js";
 
 import { createFailedEmbed, createLoadingEmbed, createSuccessEmbed } from "../discord";
-import { dbAddCode, dbCodeSetMessageID, userData } from "../database";
+import { dbAddCode, dbCodeSetMessageID, dbGetUsersCodes, userData } from "../database";
 
 import { bot } from "..";
-
-//TODO LEVEL CHECK - CODE LIMIT
 
 export async function addCode(message: Discord.Message, args: Array<string>, user: userData) {
   if (!args[0] || args[0].length != 172) {
@@ -22,6 +20,18 @@ export async function addCode(message: Discord.Message, args: Array<string>, use
   const dm = await message.author.createDM();
   dm.send(await createLoadingEmbed(message, " Adding Code"))
     .then(async (msg) => {
+      const codes = await dbGetUsersCodes(user.user_id);
+
+      if (codes.length >= Math.floor(user.level / parseInt(process.env.LVL_SLOT_PER as string, 10)) + 1) {
+        await msg.edit(
+          createFailedEmbed(message, "Too many codes added already").setDescription(
+            `Your limit ${Math.floor(user.level / parseInt(process.env.LVL_SLOT_PER as string, 10)) + 1}`
+          )
+        );
+        if (msg.deletable) msg.delete({ timeout: 120000 });
+        return;
+      }
+
       const code_id = await dbAddCode(message.author.id, args[0]);
       if (!code_id) {
         msg.edit(createFailedEmbed(message, "Something Went Wrong"));
