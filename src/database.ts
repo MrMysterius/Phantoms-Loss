@@ -199,8 +199,8 @@ export async function dbCodeAssign(user_id: string, code_id: string): Promise<nu
   }
 }
 
-export async function dbCodeUnassign(user_id: string, newAttempts: number) {
-  let sql = `UPDATE codes SET assignee = ''. status = 'OPEN', attempts = ${newAttempts} WHERE assignee = '${user_id}'`;
+export async function dbCodeUnassign(code_id: string, newAttempts: number) {
+  let sql = `UPDATE codes SET assignee = ''. status = 'OPEN', attempts = ${newAttempts} WHERE code_id = '${code_id}'`;
 
   try {
     return db.prepare(sql).run().lastInsertRowid as number;
