@@ -119,6 +119,19 @@ export async function dbGetUser(user_id: string): Promise<userData | undefined> 
   return undefined;
 }
 
+export async function dbUserSetStrikes(user_id: string, newStrikes: number) {
+  let sql = `UPDATE users SET strikes = ${newStrikes} WHERE user_id = '${user_id}'`;
+
+  try {
+    db.prepare(sql).run();
+    return;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return;
+  }
+}
+
 export async function dbUpdateTokens(user_id: string, access_token: string, refresh_token: string) {
   let sql = `UPDATE users SET access_token = '${access_token}', refresh_token = '${refresh_token}' WHERE user_id = '${user_id}'`;
 
