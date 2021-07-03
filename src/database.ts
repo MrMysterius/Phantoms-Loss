@@ -186,3 +186,15 @@ export async function dbGetAsignedCode(user_id: string): Promise<Array<codeData>
     return [];
   }
 }
+
+export async function dbAssignCode(user_id: string, code_id: string): Promise<number> {
+  let sql = `UPDATE codes SET assignee = '${user_id}', status = 'ASSIGNED' WHERE code_id = '${code_id}'`;
+
+  try {
+    return db.prepare(sql).run().lastInsertRowid as number;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return await dbAssignCode(user_id, code_id);
+  }
+}
