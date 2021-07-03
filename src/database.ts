@@ -174,3 +174,15 @@ export async function dbGetOpenCodes(): Promise<Array<codeData>> {
     return [];
   }
 }
+
+export async function dbGetAsignedCode(user_id:string):Promise<Array<codeData>> {
+  let sql = `SELECT * FROM codes WHERE assignee = '${user_id}'`;
+
+  try {
+    return db.prepare(sql).all();
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return [];
+  }
+}
