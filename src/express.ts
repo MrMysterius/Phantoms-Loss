@@ -9,7 +9,7 @@ expressMain.get("/", (req, res) => {
 });
 
 expressMain.get("/done", (req, res) => {
-  res.status(200).send("Authorized!");
+  res.status(200).send("Authorized and Registered! Thank you :)");
 });
 
 expressMain.get("/nocode", (req, res) => {
