@@ -163,7 +163,7 @@ export async function dbGetUsersCodes(user_id: string): Promise<Array<codeData>>
   }
 }
 
-export async function dbGetOpenCodes(): Promise<Array<codeData>> {
+export async function dbCodesGetOpen(): Promise<Array<codeData>> {
   let sql = `SELECT * FROM codes WHERE status = 'OPEN'`;
 
   try {
@@ -175,7 +175,7 @@ export async function dbGetOpenCodes(): Promise<Array<codeData>> {
   }
 }
 
-export async function dbGetAsignedCode(user_id: string): Promise<Array<codeData>> {
+export async function dbCodeAssignsGet(user_id: string): Promise<Array<codeData>> {
   let sql = `SELECT * FROM codes WHERE assignee = '${user_id}'`;
 
   try {
@@ -187,7 +187,7 @@ export async function dbGetAsignedCode(user_id: string): Promise<Array<codeData>
   }
 }
 
-export async function dbAssignCode(user_id: string, code_id: string): Promise<number> {
+export async function dbCodeAssign(user_id: string, code_id: string): Promise<number> {
   let sql = `UPDATE codes SET assignee = '${user_id}', status = 'ASSIGNED' WHERE code_id = '${code_id}'`;
 
   try {
@@ -195,7 +195,9 @@ export async function dbAssignCode(user_id: string, code_id: string): Promise<nu
   } catch (err) {
     console.log(sql);
     console.log(err);
-    return await dbAssignCode(user_id, code_id);
+    return await dbCodeAssign(user_id, code_id);
+  }
+}
 
 export async function dbCodeUnassign(user_id: string, newAttempts: number) {
   let sql = `UPDATE codes SET assignee = ''. status = 'OPEN', attempts = ${newAttempts} WHERE assignee = '${user_id}'`;

@@ -1,14 +1,14 @@
 import * as Discord from "discord.js";
 
 import { createLoadingEmbed, createSuccessEmbed, dmRestricted } from "../discord";
-import { dbAssignCode, dbGetAsignedCode, dbGetOpenCodes, userData } from "../database";
+import { dbCodeAssign, dbCodeAssignsGet, dbCodesGetOpen, userData } from "../database";
 
 export async function getCode(message: Discord.Message, args: Array<string>, user: userData) {
   const dm = await message.author.createDM();
   const msg = await dm.send(await createLoadingEmbed(message, "Getting Code")).catch();
   if (!msg) return;
 
-  const assignedCodes = await dbGetAsignedCode(message.author.id);
+  const assignedCodes = await dbCodeAssignsGet(message.author.id);
 
   if (assignedCodes.length > 0) {
     const embed = await createSuccessEmbed(message, "Your current code:");
@@ -34,11 +34,11 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
     return;
   }
 
-  const openCodes = await dbGetOpenCodes();
+  const openCodes = await dbCodesGetOpen();
 
   const code = openCodes[Math.floor(Math.random() * openCodes.length)];
 
-  await dbAssignCode(user.user_id, code.code_id);
+  await dbCodeAssign(user.user_id, code.code_id);
 
   const embed = await createSuccessEmbed(message, "Your current code:");
   embed.addField(`Code - ${code.code}`, "```" + code.code + "```");
