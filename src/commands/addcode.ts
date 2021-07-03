@@ -5,6 +5,8 @@ import { dbAddCode, dbCodeSetMessageID, userData } from "../database";
 
 import { bot } from "..";
 
+//TODO LEVEL CHECK - CODE LIMIT
+
 export async function addCode(message: Discord.Message, args: Array<string>, user: userData) {
   if (!args[0] || args[0].length != 172) {
     const dm = await message.author.createDM();
