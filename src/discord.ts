@@ -7,6 +7,7 @@ import { bot } from ".";
 import { getCode } from "./commands/getcode";
 import { giveUp } from "./commands/giveup";
 import { help } from "./commands/help";
+import { recovered } from "./commands/recovered";
 import { register } from "./commands/register";
 
 export async function onMessage(message: Discord.Message) {
@@ -38,6 +39,11 @@ export async function onMessage(message: Discord.Message) {
     case "register":
       if (!(await dmRestricted(message))) return;
       register(message);
+      break;
+    case "recovered":
+      if (!user) return notRegistered(message);
+      if (!(await dmRestricted(message))) return;
+      recovered(message, user);
       break;
   }
 }
