@@ -66,6 +66,13 @@ export interface codeData {
   strikes: number;
 }
 
+export enum codeStatus {
+  open = "OPEN",
+  assigned = "ASSIGNED",
+  verification_pending = "PENDING",
+  verified = "VERIFIED",
+}
+
 export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamConnections: Array<connectionsData>) {
   let sql = `INSERT INTO users (user_id, username, steam_username, access_token, refresh_token, scope, token_type, level, xp) VALUES ('${userData.id}', '${
     userData.username
@@ -174,8 +181,8 @@ export async function dbCodesGetOpen(user_id: string): Promise<Array<codeData>> 
   }
 }
 
-export async function dbCodeAssignsGet(user_id: string): Promise<Array<codeData>> {
-  let sql = `SELECT * FROM codes WHERE assignee = '${user_id}'`;
+export async function dbCodeAssignsGet(user_id: string, status: codeStatus): Promise<Array<codeData>> {
+  let sql = `SELECT * FROM codes WHERE assignee = '${user_id}' and status = '${status}'`;
 
   try {
     return db.prepare(sql).all();

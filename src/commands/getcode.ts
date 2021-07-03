@@ -1,14 +1,14 @@
 import * as Discord from "discord.js";
 
-import { createLoadingEmbed, createSuccessEmbed, dmRestricted } from "../discord";
-import { dbCodeAssign, dbCodeAssignsGet, dbCodesGetOpen, userData } from "../database";
+import { codeStatus, dbCodeAssign, dbCodeAssignsGet, dbCodesGetOpen, userData } from "../database";
+import { createFailedEmbed, createLoadingEmbed, createSuccessEmbed, dmRestricted } from "../discord";
 
 export async function getCode(message: Discord.Message, args: Array<string>, user: userData) {
   const dm = await message.author.createDM();
   const msg = await dm.send(await createLoadingEmbed(message, "Getting Code")).catch();
   if (!msg) return;
 
-  const assignedCodes = await dbCodeAssignsGet(message.author.id);
+  const assignedCodes = await dbCodeAssignsGet(message.author.id, codeStatus.assigned);
 
   if (assignedCodes.length > 0) {
     const embed = await createSuccessEmbed(message, "Your current code:");
