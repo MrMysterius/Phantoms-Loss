@@ -104,7 +104,7 @@ export async function dmRestricted(message: Discord.Message) {
 
 export async function notRegistered(message: Discord.Message) {
   const dm = await message.author.createDM();
-  const embed = createFailedEmbed(message, "You are not registered. Click Here.").setURL((process.env.OAUTH_LINK as string) || "");
+  const embed = createFailedEmbed(message, "You are not registered. Use the register command.");
   dm.send(embed)
     .then((msg) => {
       if (msg.deletable) msg.delete({ timeout: 30000 });
