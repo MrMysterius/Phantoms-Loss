@@ -13,6 +13,7 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
   if (assignedCodes.length > 0) {
     const embed = await createSuccessEmbed(message, "Your current code:");
     embed.addField(`Code - ${assignedCodes[0].code}`, "```" + assignedCodes[0].code + "```");
+    embed.addField("Attempts", assignedCodes[0].attempts);
     embed.addField(
       "Keys",
       `${process.env.E_UNCOMMON}: ${assignedCodes[0].uncommon}\n${process.env.E_RARE}: ${assignedCodes[0].rare}\n${process.env.E_EPIC}: ${assignedCodes[0].epic}\n${process.env.E_LEGENDARY}: ${assignedCodes[0].legendary}`
@@ -42,6 +43,7 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
 
   const embed = await createSuccessEmbed(message, "Your current code:");
   embed.addField(`Code - ${code.code}`, "```" + code.code + "```");
+  embed.addField("Attempts", code.attempts);
   embed.addField(
     "Keys",
     `${process.env.E_UNCOMMON}: ${code.uncommon}\n${process.env.E_RARE}: ${code.rare}\n${process.env.E_EPIC}: ${code.epic}\n${process.env.E_LEGENDARY}: ${code.legendary}`
