@@ -7,6 +7,9 @@ export async function help(message: Discord.Message, args: Array<String>) {
 
   embed.setTitle("Phantoms Loss - Help Page");
   embed.setURL("https://discord.com/oauth2/authorize?client_id=860281562972291082&scope=bot&permissions=330752");
+
+  embed.setDescription("This bot is for sharing share codes from the game Phantom Abyss, it is made so over people can recover your lost goods.");
+
   embed.setColor(0xffd089);
 
   embed.addField(

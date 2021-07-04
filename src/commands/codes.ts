@@ -7,11 +7,11 @@ export async function codes(message: Discord.Message, user: userData) {
   const dm = await message.author.createDM();
 
   const codes = await dbGetUsersCodes(user.user_id);
-  if (!codes) return dm.send(createFailedEmbed(message, "Couldn't get any codes."));
+  if (codes.length == 0) return await dm.send(createFailedEmbed(message, "Couldn't get any codes."));
 
-  for (let code of codes) {
-    const embed = await createSuccessEmbed(message, "Your current code:");
-    embed.addField(`Code - ${code.code}`, "```" + code.code + "```");
+  codes.forEach(async (code) => {
+    const embed = createSuccessEmbed(message, "Your current code:");
+    embed.addField(`Code - ${code.code_id}`, "```" + code.code + "```");
     embed.addField("Attempts", code.attempts);
     embed.addField(
       "Keys",
@@ -31,6 +31,8 @@ export async function codes(message: Discord.Message, user: userData) {
     }
     embed.addField("Guardian", guardian);
 
-    await dm.send(embed).catch(() => {});
-  }
+    await dm.send(embed).catch((err) => {
+      console.log(err);
+    });
+  });
 }
