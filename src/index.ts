@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import * as path from "path";
 
 import { default as bsql } from "better-sqlite3";
+import { dbCodesGetOpen } from "./database";
 import { default as express } from "express";
 import { expressMain } from "./express";
 import { onMessage } from "./discord";
@@ -26,11 +27,13 @@ app.use("/", expressMain);
 bot.on("ready", () => {
   console.log("Discord Bot Ready!", "Connected to", bot.guilds.cache.array().length, "guild.");
 
-  setInterval(() => {
+  setInterval(async () => {
+    const codes = await dbCodesGetOpen("-");
+
     bot.user?.setPresence({
       status: "online",
       activity: {
-        name: `${process.env.PREFIX || "#"}help | ${bot.guilds.cache.array().length} Guilds`,
+        name: `${process.env.PREFIX || "#"}help | ${bot.guilds.cache.array().length} Guilds and ${codes.length} Open Codes`,
         url: "https://discord.com/oauth2/authorize?client_id=860281562972291082&scope=bot&permissions=330752",
         type: "WATCHING",
       },
