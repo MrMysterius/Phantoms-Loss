@@ -17,7 +17,7 @@ export async function codes(message: Discord.Message, user: userData) {
       "Keys",
       `${process.env.E_UNCOMMON}: ${code.uncommon}\n${process.env.E_RARE}: ${code.rare}\n${process.env.E_EPIC}: ${code.epic}\n${process.env.E_LEGENDARY}: ${code.legendary}`
     );
-    let guardian = "";
+    let guardian = "-";
     switch (code.guardian) {
       case "MASK":
         guardian = process.env.E_GUARDIAN_MASK as string;
