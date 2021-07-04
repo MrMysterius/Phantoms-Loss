@@ -29,17 +29,17 @@ export async function onMessage(message: Discord.Message) {
       help(message, args);
       break;
     case "addcode":
-      if (!user) return notRegistered(message);
+      if (!user) return await notRegistered(message);
       if (!(await dmRestricted(message))) return;
       addCode(message, args, user);
       break;
     case "getcode":
-      if (!user) return notRegistered(message);
+      if (!user) return await notRegistered(message);
       if (!(await dmRestricted(message))) return;
       getCode(message, args, user);
       break;
     case "giveup":
-      if (!user) return notRegistered(message);
+      if (!user) return await notRegistered(message);
       if (!(await dmRestricted(message))) return;
       giveUp(message, args, user);
       break;
@@ -48,17 +48,17 @@ export async function onMessage(message: Discord.Message) {
       register(message);
       break;
     case "recovered":
-      if (!user) return notRegistered(message);
+      if (!user) return await notRegistered(message);
       if (!(await dmRestricted(message))) return;
       recovered(message, user);
       break;
     case "verify":
-      if (!user) return notRegistered(message);
+      if (!user) return await notRegistered(message);
       if (!(await dmRestricted(message))) return;
       verify(message, args, user);
       break;
     case "codes":
-      if (!user) return notRegistered(message);
+      if (!user) return await notRegistered(message);
       if (!(await dmRestricted(message))) return;
       codes(message, user);
       break;
