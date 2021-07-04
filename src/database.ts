@@ -280,3 +280,15 @@ export async function dbUserUpdateLevelAndXP(user_id: string, level: number, xp:
     return;
   }
 }
+
+export async function dbCodeGet(code_id: string): Promise<codeData | undefined> {
+  let sql = `SELECT * FROM codes WHERE code_id = ${code_id}`;
+
+  try {
+    return db.prepare(sql).get();
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return undefined;
+  }
+}
