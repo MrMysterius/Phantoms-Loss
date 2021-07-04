@@ -6,7 +6,7 @@ import { dbGetUser, userData } from "../database";
 export async function userInfo(message: Discord.Message, args: Array<string>) {
   if (!args[0]) return message.channel.send(createFailedEmbed(message, "Missing Arguments")).catch(() => {});
 
-  const user_id = args[0].match(/^\d+$/g)?.[0] || args[0].match(/(?<=^\<\@)\d+(?=\>$)/g)?.[0] || undefined;
+  const user_id = args[0].match(/^\d+$/g)?.[0] || args[0].match(/(?<=^\<\@|\!)\d+(?=\>$)/g)?.[0] || undefined;
 
   if (!user_id) return message.channel.send(createFailedEmbed(message, "Argument isn't a user")).catch(() => {});
 
@@ -18,6 +18,7 @@ export async function userInfo(message: Discord.Message, args: Array<string>) {
 
   embed.addField("Level", `Level: ${user.level}\nXP: ${user.xp}`);
   embed.addField("Status", user.status);
+  if (message.author.id == user_id) embed.addField("Strikes", user.strikes);
 
   message.channel.send(embed).catch(() => {});
 }
