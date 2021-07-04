@@ -11,6 +11,7 @@ import { help } from "./commands/help";
 import { recovered } from "./commands/recovered";
 import { register } from "./commands/register";
 import { report } from "./commands/report";
+import { setinfo } from "./commands/setinfo";
 import { userInfo } from "./commands/userinfo";
 import { verify } from "./commands/verify";
 
@@ -70,6 +71,11 @@ export async function onMessage(message: Discord.Message) {
       if (!user) return await notRegistered(message);
       if (!(await dmRestricted(message))) return;
       report(message, args, user);
+      break;
+    case "setinfo":
+      if (!user) return await notRegistered(message);
+      if (!(await dmRestricted(message))) return;
+      setinfo(message, args, user);
       break;
   }
 }
