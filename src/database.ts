@@ -46,6 +46,13 @@ export interface userData {
   token_type: string;
   level: number;
   xp: number;
+  strikes: number;
+  status: userStatus;
+}
+
+export enum userStatus {
+  active = "ACTIVE",
+  banned = "BANNED",
 }
 
 export interface codeData {
@@ -71,6 +78,7 @@ export enum codeStatus {
   assigned = "ASSIGNED",
   verification_pending = "PENDING",
   verified = "VERIFIED",
+  verified_wrongname = "VERIFIED-WRONGNAME",
 }
 
 export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, steamConnections: Array<connectionsData>) {
@@ -78,7 +86,7 @@ export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, 
     userData.id
   }', '${userData.username}', '${steamConnections.reduce((p, c) => (p += c.name + " "), "")}', '${oAuth2Data.access_token}', '${oAuth2Data.refresh_token}', '${
     oAuth2Data.scope
-  }', '${oAuth2Data.token_type}', 1, 0, 0, 'ACTIVE')`;
+  }', '${oAuth2Data.token_type}', 1, 0, 0, '${userStatus.active}')`;
   try {
     db.prepare(sql).run();
     return;
@@ -119,8 +127,8 @@ export async function dbGetUser(user_id: string): Promise<userData | undefined> 
   return undefined;
 }
 
-export async function dbUserSetStrikes(user_id: string, newStrikes: number) {
-  let sql = `UPDATE users SET strikes = ${newStrikes} WHERE user_id = '${user_id}'`;
+export async function dbUserSetStrikes(user_id: string, newStrikes: number, status: userStatus) {
+  let sql = `UPDATE users SET strikes = ${newStrikes}, status = '${status}' WHERE user_id = '${user_id}'`;
 
   try {
     db.prepare(sql).run();
