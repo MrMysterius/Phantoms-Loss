@@ -3,7 +3,6 @@ import * as Discord from "discord.js";
 import { dbGetUser, userData } from "./database";
 
 import { addCode } from "./commands/addcode";
-import { bot } from ".";
 import { getCode } from "./commands/getcode";
 import { giveUp } from "./commands/giveup";
 import { help } from "./commands/help";
