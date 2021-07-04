@@ -27,7 +27,7 @@ export async function recovered(message: Discord.Message, user: userData) {
 
   verify_embed.setTitle("One of your codes got recovered. Please Verify!");
   verify_embed.setDescription(
-    `Please paste the code ingame for the verification. Then check if the person who completed it is listed below. If so then use the command \`verify ${code.code_id} yes\`, if not please type \`verify ${code.code_id} no\`.`
+    `Please paste the code ingame for the verification. Then check if the person who completed it is listed below. If so then use the command \`verify ${code.code_id} yes\`, if the username doesn't match use \`verify ${code.code_id} wrong_name\` and if you didn't get help at all type \`verify ${code.code_id} no\`.`
   );
 
   verify_embed.addField("Username", user.steam_username);
