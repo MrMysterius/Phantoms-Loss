@@ -41,8 +41,8 @@ export async function verify(message: Discord.Message, args: Array<string>, user
     case "yes":
       assignee.xp += Math.floor(parseInt(process.env.LVL_REWARD_XP as string, 10));
       if (assignee.xp >= parseInt(process.env.LVL_BASE_XP as string, 10) * parseInt(process.env.LVL_XP_SCALE as string, 10) * assignee.level) {
-        assignee.level++;
         assignee.xp -= parseInt(process.env.LVL_BASE_XP as string, 10) * parseInt(process.env.LVL_XP_SCALE as string, 10) * assignee.level;
+        assignee.level++;
       }
       await dbUserUpdateLevelAndXP(assignee.user_id, assignee.level, assignee.xp);
       await dbCodeChangeStatus(code.code_id, codeStatus.verified);
