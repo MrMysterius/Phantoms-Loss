@@ -6,7 +6,7 @@ import { dbAddCode, dbCodeSetMessageID, dbGetUsersCodes, userData } from "../dat
 import { bot } from "..";
 
 export async function addCode(message: Discord.Message, args: Array<string>, user: userData) {
-  if (!args[0] || args[0].length != 172) {
+  if (!args[0] || args[0].length < 50) {
     const dm = await message.author.createDM();
     const embed = createFailedEmbed(message, "Code Missing");
     dm.send(embed)
