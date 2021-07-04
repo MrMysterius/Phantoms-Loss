@@ -4,6 +4,7 @@ import { dbAddOAuth2, dbGetUser, userData } from "./database";
 import { getSteamConnections, getUserInfo, refreshToken } from "./oauth2";
 
 import { addCode } from "./commands/addcode";
+import { codes } from "./commands/codes";
 import { getCode } from "./commands/getcode";
 import { giveUp } from "./commands/giveup";
 import { help } from "./commands/help";
@@ -54,6 +55,11 @@ export async function onMessage(message: Discord.Message) {
       if (!user) return notRegistered(message);
       if (!(await dmRestricted(message))) return;
       verify(message, args, user);
+      break;
+    case "codes":
+      if (!user) return notRegistered(message);
+      if (!(await dmRestricted(message))) return;
+      codes(message, user);
       break;
   }
 }
