@@ -36,28 +36,8 @@ export async function addCode(message: Discord.Message, args: Array<string>, use
       if (!code_id) {
         msg.edit(createFailedEmbed(message, "Something Went Wrong"));
       }
-      msg.edit(createSuccessEmbed(message, "Added Code"));
+      msg.edit(createSuccessEmbed(message, "Added Code. Code ID: " + code_id).setDescription("Use the `setinfo` command to add additional infos to your code"));
       if (msg.deletable) msg.delete({ timeout: 120000 });
-      dm.send(createLoadingEmbed(message, "Add more information? (Please Wait Until Loaded)"))
-        .then(async (msg) => {
-          await dbCodeSetMessageID(code_id as string, msg.id);
-          await msg.react(process.env.E_UNCOMMON as string);
-          await msg.react(process.env.E_RARE as string);
-          await msg.react(process.env.E_EPIC as string);
-          await msg.react(process.env.E_LEGENDARY as string);
-          await msg.react(process.env.E_GUARDIAN_MASK as string);
-          await msg.react(process.env.E_GUARDIAN_DEVOUR as string);
-          await msg.react(process.env.E_GUARDIAN_EYE as string);
-          await msg.react(process.env.E_SUCCESS as string);
-          msg
-            .edit(
-              createSuccessEmbed(message, `Add more Information, then click on ${process.env.E_SUCCESS}`).setDescription(
-                "Click on the Glyphs to add one to the count. Click on the Guardian to select which guardian was in the temple."
-              )
-            )
-            .catch();
-        })
-        .catch();
     })
     .catch();
 }
