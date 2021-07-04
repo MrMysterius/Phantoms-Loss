@@ -91,8 +91,8 @@ export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, 
     db.prepare(sql).run();
     return;
   } catch (err) {
-    console.log(sql);
-    console.log(err);
+    //console.log(sql);
+    //console.log(err);
   }
 
   console.log("Trying Update...");
@@ -108,6 +108,7 @@ export async function dbAddOAuth2(oAuth2Data: OAuth2Data, userData: userObject, 
 
   try {
     db.prepare(sql).run();
+    console.log("updated");
     return;
   } catch (err) {
     console.log(sql);
@@ -298,5 +299,30 @@ export async function dbCodeGet(code_id: string): Promise<codeData | undefined> 
     console.log(sql);
     console.log(err);
     return undefined;
+  }
+}
+
+export async function dbCodeGetByMessageID(message_id: string): Promise<codeData | undefined> {
+  let sql = `SELECT * FROM codes WHERE message_id = ${message_id}`;
+
+  try {
+    return db.prepare(sql).get();
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return undefined;
+  }
+}
+
+export async function dbCodeSetInfos(code_id: string, uncommons: number, rares: number, epics: number, legendarys: number, guardian: string) {
+  let sql = `UPDATE codes SET uncommon = ${uncommons}, rare = ${rares}, epic = ${epics}, legendary = ${legendarys}, guardian = '${guardian}' WHERE code_id = ${code_id}`;
+
+  try {
+    db.prepare(sql).run();
+    return;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return;
   }
 }
