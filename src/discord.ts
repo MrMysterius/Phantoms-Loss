@@ -1,6 +1,7 @@
 import * as Discord from "discord.js";
 
-import { dbGetUser, userData } from "./database";
+import { dbAddOAuth2, dbGetUser, userData } from "./database";
+import { getSteamConnections, getUserInfo, refreshToken } from "./oauth2";
 
 import { addCode } from "./commands/addcode";
 import { getCode } from "./commands/getcode";
@@ -15,6 +16,10 @@ export async function onMessage(message: Discord.Message) {
   const command = args.shift();
 
   const user = await dbGetUser(message.author.id);
+
+  if (user) {
+    updateConnections(user);
+  }
 
   switch (command) {
     case "help":
@@ -127,4 +132,27 @@ export async function notRegistered(message: Discord.Message) {
         })
         .catch(() => {});
     });
+}
+
+export async function updateConnections(user: userData) {
+  try {
+    const userData = await getUserInfo(user.token_type, user.access_token);
+    const connections = await getSteamConnections(user.token_type, user.access_token);
+
+    await dbAddOAuth2(
+      { access_token: user.access_token, expires_is: 0, refresh_token: user.refresh_token, scope: user.scope, token_type: user.token_type },
+      userData,
+      connections
+    );
+  } catch (err) {
+    console.log(err);
+    const refreshData = await refreshToken(user.user_id);
+
+    if (!refreshData) return;
+
+    const userData = await getUserInfo(refreshData.token_type, refreshData.access_token);
+    const connections = await getSteamConnections(refreshData.token_type, refreshData.access_token);
+
+    await dbAddOAuth2(refreshData, userData, connections);
+  }
 }
