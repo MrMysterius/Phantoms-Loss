@@ -9,6 +9,7 @@ import { giveUp } from "./commands/giveup";
 import { help } from "./commands/help";
 import { recovered } from "./commands/recovered";
 import { register } from "./commands/register";
+import { verify } from "./commands/verify";
 
 export async function onMessage(message: Discord.Message) {
   if (!message.content.startsWith(process.env.PREFIX || "#") || message.author.bot) return;
@@ -48,6 +49,11 @@ export async function onMessage(message: Discord.Message) {
       if (!user) return notRegistered(message);
       if (!(await dmRestricted(message))) return;
       recovered(message, user);
+      break;
+    case "verify":
+      if (!user) return notRegistered(message);
+      if (!(await dmRestricted(message))) return;
+      verify(message, args, user);
       break;
   }
 }
