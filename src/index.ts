@@ -2,10 +2,11 @@ import * as Discord from "discord.js";
 import * as dotenv from "dotenv";
 import * as path from "path";
 
+import { onMessage, onMessageReactionAdd } from "./discord";
+
 import { default as bsql } from "better-sqlite3";
 import { default as express } from "express";
 import { expressMain } from "./express";
-import { onMessage } from "./discord";
 
 dotenv.config();
 
@@ -39,6 +40,8 @@ bot.on("ready", () => {
 });
 
 bot.on("message", onMessage);
+
+bot.on("messageReactionAdd", onMessageReactionAdd);
 
 bot.login(process.env.DISCORD_TOKEN || process.exit(10));
 app.listen(process.env.PORT || 3000, () => {
