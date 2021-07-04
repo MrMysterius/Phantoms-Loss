@@ -11,7 +11,7 @@ export async function help(message: Discord.Message, args: Array<String>) {
 
   embed.addField(
     "Commands",
-    "`help` - help panel\n`register` - register your account\n`addcode <code>` - Adds a code\n`getcode` - Get a code to help\n`recovered` - Marks the current code as rescued (will be verified)\n`giveup` - Skips the current code (also used if failed attemp)\n`report` - reports the code as not valid\n`codes` - Lists your active codes\n`userinfo <mention or userid>` - shows infos about a user"
+    "`help` - help panel\n`register` - register your account\n`addcode <code>` - Adds a code\n`getcode` - Get a code to help\n`recovered` - Marks the current code as rescued (will be verified)\n`giveup` - Skips the current code (also used if failed attemp)\n`report` - reports the code as not valid\n`codes` - Lists your active codes\n`userinfo <mention or userid>` - shows infos about a user\n`verify <code_id> <yes/no/wrong_name>` - For verifying a code"
   );
 
   //TODO Add Infos
