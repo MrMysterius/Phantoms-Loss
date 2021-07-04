@@ -180,8 +180,7 @@ export async function dbCodeSetMessageID(code_id: string, message_id: string) {
 }
 
 export async function dbGetUsersCodes(user_id: string): Promise<Array<codeData>> {
-  if (!user_id) return [];
-  let sql = `SELECT * FROM codes WHERE requester = '${user_id}' and (status = 'OPEN' or status = 'ASSIGNED' or status = 'PENDING')`;
+  let sql = `SELECT * FROM codes WHERE requester = '${user_id}' AND (status = 'OPEN' OR status = 'ASSIGNED' OR status = 'PENDING')`;
 
   try {
     return db.prepare(sql).all();
