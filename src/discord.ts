@@ -1,6 +1,6 @@
 import * as Discord from "discord.js";
 
-import { dbAddOAuth2, dbCodeGetByMessageID, dbCodeSetInfos, dbCodeSetMessageID, dbGetUser, userData } from "./database";
+import { dbAddOAuth2, dbCodeGetByMessageID, dbCodeSetInfos, dbCodeSetMessageID, dbGetUser, userData, userStatus } from "./database";
 import { getSteamConnections, getUserInfo, refreshToken } from "./oauth2";
 
 import { addCode } from "./commands/addcode";
@@ -23,6 +23,7 @@ export async function onMessage(message: Discord.Message) {
   const user = await dbGetUser(message.author.id);
 
   if (user) {
+    if (user.status == userStatus.banned) return await message.channel.send(createFailedEmbed(message, "Your Account is banned!")).catch(() => {});
     updateConnections(user);
   }
 
