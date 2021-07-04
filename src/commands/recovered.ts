@@ -38,8 +38,8 @@ export async function recovered(message: Discord.Message, user: userData) {
     msg.edit(createFailedEmbed(message, "Requester not reachable :(").setDescription("Adding some xp for you troulbes"));
     user.xp += Math.floor(parseInt(process.env.LVL_REWARD_XP as string, 10) / 4);
     if (user.xp >= parseInt(process.env.LVL_BASE_XP as string, 10) * parseInt(process.env.LVL_XP_SCALE as string, 10) * user.level) {
-      user.level++;
       user.xp -= parseInt(process.env.LVL_BASE_XP as string, 10) * parseInt(process.env.LVL_XP_SCALE as string, 10) * user.level;
+      user.level++;
     }
     await dbUserUpdateLevelAndXP(user.user_id, user.level, user.xp);
     return;
