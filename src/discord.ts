@@ -10,6 +10,7 @@ import { giveUp } from "./commands/giveup";
 import { help } from "./commands/help";
 import { recovered } from "./commands/recovered";
 import { register } from "./commands/register";
+import { userInfo } from "./commands/userinfo";
 import { verify } from "./commands/verify";
 
 export async function onMessage(message: Discord.Message) {
@@ -60,6 +61,9 @@ export async function onMessage(message: Discord.Message) {
       if (!user) return notRegistered(message);
       if (!(await dmRestricted(message))) return;
       codes(message, user);
+      break;
+    case "userinfo":
+      userInfo(message, args);
       break;
   }
 }
