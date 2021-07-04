@@ -41,8 +41,6 @@ bot.on("ready", () => {
 
 bot.on("message", onMessage);
 
-bot.on("messageReactionAdd", onMessageReactionAdd);
-
 bot.login(process.env.DISCORD_TOKEN || process.exit(10));
 app.listen(process.env.PORT || 3000, () => {
   console.log("Express Ready!");

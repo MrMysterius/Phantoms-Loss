@@ -65,45 +65,8 @@ export async function onMessage(message: Discord.Message) {
     case "userinfo":
       userInfo(message, args);
       break;
-  }
-}
-
-export async function onMessageReactionAdd(reaction: Discord.MessageReaction, partialUser: Discord.PartialUser) {
-  const code = await dbCodeGetByMessageID(reaction.message.id);
-
-  if (!code) return;
-
-  switch (reaction.emoji.name) {
-    case process.env.E_UNCOMMON:
-      code.uncommon++;
-      break;
-    case process.env.E_RARE:
-      code.rare++;
-      break;
-    case process.env.E_EPIC:
-      code.epic++;
-      break;
-    case process.env.E_LEGENDARY:
-      code.legendary++;
-      break;
-    case process.env.E_GUARDIAN_MASK:
-      if (code.guardian) break;
-      code.guardian = "MASK";
-      break;
-    case process.env.E_GUARDIAN_EYE:
-      if (code.guardian) break;
-      code.guardian = "EYE";
-      break;
-    case process.env.E_GUARDIAN_DEVOUR:
-      if (code.guardian) break;
-      code.guardian = "DEVOUR";
-      break;
-    case process.env.E_SUCCESS:
-      await dbCodeSetMessageID(code.code_id, "-");
       break;
   }
-
-  await dbCodeSetInfos(code.code_id, code.uncommon, code.rare, code.epic, code.legendary, code.guardian);
 }
 
 export function createBasicEmbed(message: Discord.Message) {
