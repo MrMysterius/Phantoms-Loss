@@ -63,7 +63,7 @@ export interface codeData {
   assignee: string;
   added_at: string;
   resolved_at: string;
-  status: string;
+  status: codeStatus;
   uncommon: number;
   rare: number;
   epic: number;
@@ -71,6 +71,7 @@ export interface codeData {
   guardian: string;
   attempts: number;
   strikes: number;
+  already_cleared: number;
 }
 
 export enum codeStatus {
