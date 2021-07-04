@@ -327,3 +327,16 @@ export async function dbCodeSetInfos(code_id: string, uncommons: number, rares: 
     return;
   }
 }
+
+export async function dbCodeSetReports(code_id: string, strikes: number, already_cleared: number, status: codeStatus) {
+  let sql = `UPDATE codes SET strikes = ${strikes}, already_cleared = ${already_cleared}, status = '${status}' WHERE code_id = ${code_id}`;
+
+  try {
+    db.prepare(sql).run();
+    return;
+  } catch (err) {
+    console.log(sql);
+    console.log(err);
+    return;
+  }
+}
