@@ -303,7 +303,7 @@ export async function dbCodeGet(code_id: string): Promise<codeData | undefined> 
 }
 
 export async function dbCodeGetByMessageID(message_id: string): Promise<codeData | undefined> {
-  let sql = `SELECT * FROM codes WHERE message_id = ${message_id}`;
+  let sql = `SELECT * FROM codes WHERE message_id = '${message_id}'`;
 
   try {
     return db.prepare(sql).get();
