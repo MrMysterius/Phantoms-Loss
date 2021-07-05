@@ -10,13 +10,9 @@ export async function codes(message: Discord.Message, user: userData) {
   if (codes.length == 0) return await dm.send(createFailedEmbed(message, "Couldn't get any codes."));
 
   codes.forEach(async (code) => {
-    const embed = createSuccessEmbed(message, "Your current code:");
+    const embed = createSuccessEmbed(message, "One of your codes:");
     embed.addField(`Code - ${code.code_id}`, "```" + code.code + "```");
     embed.addField("Attempts", code.attempts);
-    embed.addField(
-      "Keys",
-      `${process.env.E_UNCOMMON}: ${code.uncommon}\n${process.env.E_RARE}: ${code.rare}\n${process.env.E_EPIC}: ${code.epic}\n${process.env.E_LEGENDARY}: ${code.legendary}`
-    );
     let guardian = "-";
     switch (code.guardian) {
       case "MASK":
@@ -30,6 +26,10 @@ export async function codes(message: Discord.Message, user: userData) {
         break;
     }
     embed.addField("Guardian", guardian);
+    embed.addField(
+      "Keys",
+      `${process.env.E_UNCOMMON}: ${code.uncommon}\n${process.env.E_RARE}: ${code.rare}\n${process.env.E_EPIC}: ${code.epic}\n${process.env.E_LEGENDARY}: ${code.legendary}`
+    );
 
     await dm.send(embed).catch((err) => {
       console.log(err);
