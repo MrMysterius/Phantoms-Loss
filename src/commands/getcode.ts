@@ -14,7 +14,7 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
     const embed = await createSuccessEmbed(message, "Your current code:");
     embed.addField(`Code - ${assignedCodes[0].code_id}`, "```" + assignedCodes[0].code + "```");
     embed.addField("Attempts", assignedCodes[0].attempts);
-    switch (code.code.length) {
+    switch (assignedCodes[0].code.length) {
       case 236:
         embed.addField("Run died in", "**Ruins**");
         break;
