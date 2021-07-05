@@ -14,6 +14,17 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
     const embed = await createSuccessEmbed(message, "Your current code:");
     embed.addField(`Code - ${assignedCodes[0].code_id}`, "```" + assignedCodes[0].code + "```");
     embed.addField("Attempts", assignedCodes[0].attempts);
+    switch (code.code.length) {
+      case 236:
+        embed.addField("Run died in", "**Ruins**");
+        break;
+      case 256:
+        embed.addField("Run died in", "**Caverns**");
+        break;
+      case 280:
+        embed.addField("Run died in", "**Inferno**");
+        break;
+    }
     let guardian = "-";
     switch (assignedCodes[0].guardian) {
       case "MASK":
@@ -54,6 +65,17 @@ export async function getCode(message: Discord.Message, args: Array<string>, use
   const embed = await createSuccessEmbed(message, "Your current code:");
   embed.addField(`Code - ${code.code_id}`, "```" + code.code + "```");
   embed.addField("Attempts", code.attempts);
+  switch (code.code.length) {
+    case 236:
+      embed.addField("Run died in", "**Ruins**");
+      break;
+    case 256:
+      embed.addField("Run died in", "**Caverns**");
+      break;
+    case 280:
+      embed.addField("Run died in", "**Inferno**");
+      break;
+  }
   let guardian = "-";
   switch (code.guardian) {
     case "MASK":

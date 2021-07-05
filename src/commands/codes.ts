@@ -13,6 +13,17 @@ export async function codes(message: Discord.Message, user: userData) {
     const embed = createSuccessEmbed(message, "One of your codes:");
     embed.addField(`Code - ${code.code_id}`, "```" + code.code + "```");
     embed.addField("Attempts", code.attempts);
+    switch (code.code.length) {
+      case 236:
+        embed.addField("Run died in", "**Ruins**");
+        break;
+      case 256:
+        embed.addField("Run died in", "**Caverns**");
+        break;
+      case 280:
+        embed.addField("Run died in", "**Inferno**");
+        break;
+    }
     let guardian = "-";
     switch (code.guardian) {
       case "MASK":
